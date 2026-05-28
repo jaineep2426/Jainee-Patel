@@ -293,13 +293,55 @@ function Main() {
 
       <section className="block" data-screen-label="09 Certifications">
         <SectionHead number={9} label="Certifications & Training" />
-        <ul className="ach-list">
-          {portfolio.certifications.map((item) => (
-            <li key={`${item.title}-${item.issuer}`}>
-              <strong>{item.title}</strong> by {item.issuer}{item.year ? `, ${item.year}` : ''}
-            </li>
-          ))}
-        </ul>
+        <div className="cert-grid">
+          {portfolio.certifications.map((item) => {
+            const slug = (s: string) =>
+              s
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)/g, '');
+            const fileName = item.image ? item.image : `${slug(item.title)}.svg`;
+            const primaryPath = `/certificates/${fileName}`;
+            const fallbackPath = `/assets/certificates/${fileName}`;
+            const imgPath = primaryPath;
+            return (
+              <div className="cert-card" key={`${item.title}-${item.issuer}`}>
+                <div className="cert-thumb">
+                  <img
+                    src={imgPath}
+                    alt={`${item.title} certificate`}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => {
+                      const el = document.activeElement as HTMLElement | null;
+                      // open lightbox by dispatching a custom event handled in App
+                      window.dispatchEvent(new CustomEvent('open-cert-lightbox', { detail: imgPath }));
+                      if (el) el.focus();
+                    }}
+                    onKeyDown={(e) => { if ((e as React.KeyboardEvent).key === 'Enter') window.dispatchEvent(new CustomEvent('open-cert-lightbox', { detail: imgPath })); }}
+                    onError={(e) => {
+                      const el = e.currentTarget as HTMLImageElement;
+                      el.onerror = null;
+                      // if primary path failed, try fallback once
+                      if (!el.dataset.fallbackTried) {
+                        el.dataset.fallbackTried = '1';
+                        el.src = fallbackPath;
+                        return;
+                      }
+                      const placeholder = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400'><rect width='100%' height='100%' fill='%23f1ebe1'/><text x='50%' y='50%' font-size='24' fill='%23373737' text-anchor='middle' dominant-baseline='middle'>Certificate</text></svg>";
+                      el.src = placeholder;
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  />
+                </div>
+                <div className="cert-meta">
+                  <div className="cert-title">{item.title}</div>
+                  <div className="cert-issuer">{item.issuer}{item.year ? `, ${item.year}` : ''}</div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </section>
 
       <section className="block" data-screen-label="10 Achievements">
@@ -334,6 +376,24 @@ export default function App() {
 
   const resolvedTheme = theme === 'device' ? systemTheme : theme;
 
+  const [lightboxSrc, setLightboxSrc] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setLightboxSrc(null);
+    }
+    function onOpen(e: Event) {
+      const ev = e as CustomEvent<string>;
+      setLightboxSrc(ev.detail);
+    }
+    window.addEventListener('keydown', onKey);
+    window.addEventListener('open-cert-lightbox', onOpen as EventListener);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('open-cert-lightbox', onOpen as EventListener);
+    };
+  }, []);
+
   React.useEffect(() => {
     if (typeof window === 'undefined') {
       return;
@@ -364,6 +424,14 @@ export default function App() {
           onAccentChange={setAccent}
         />
         <Main />
+        {lightboxSrc ? (
+          <div className="lightbox" role="dialog" aria-modal="true" onClick={() => setLightboxSrc(null)}>
+            <div className="lightbox-inner" onClick={(e) => e.stopPropagation()}>
+              <button className="lightbox-close" aria-label="Close" onClick={() => setLightboxSrc(null)}>✕</button>
+              <img src={lightboxSrc} alt="Certificate preview" className="lightbox-img" />
+            </div>
+          </div>
+        ) : null}
       </div>
     </div>
   );

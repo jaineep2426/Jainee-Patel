@@ -56,6 +56,7 @@ export interface CertificationItem {
   title: string;
   issuer: string;
   year?: string;
+  image?: string;
 }
 
 export interface GroupedAchievementItem {
@@ -70,12 +71,11 @@ export interface PortfolioSkillGroup {
 
 export const portfolio = {
   name: 'Jainee Patel',
-  role: 'Computer Engineering Student, Research Intern, and Full-Stack Developer',
+  role: 'Undergraduate Researcher | Former Chair, IEEE Student Branch, Kadi Sarva Vishvavidyalaya 2025 | Final year Computer Engineering Student, LDRP-ITR | 1 X Azure Certified | 4 X NPTEL Certified',
   location: 'Gandhinagar, Gujarat',
   email: 'jainu2426@gmail.com',
   phone: '+91 7981 23552',
-  summary:
-    'Computer Engineering student focused on AI/ML, data analytics, research, and product-oriented web development. Active across IEEE, student research programs, hackathons, and publication-driven work.',
+  summary: '',
   stats: [
     { value: '2', label: 'research internships' },
     { value: '4', label: 'featured projects' },
@@ -97,10 +97,20 @@ export const portfolio = {
       institution: 'Higher Secondary Education',
       location: 'Gandhinagar, Gujarat',
       degree: 'Mathematics',
-      when: 'Jul 2022 - Jul 2023',
+      when: '2021-2023',
       details: [
         'Cumulative Percentage: 66.76%',
         'Board: GHSEB (Gujarat Higher Secondary Education Board)',
+      ],
+    },
+    {
+      institution: 'School of Achiever, Kudasan, Gandhinagar',
+      location: 'Gandhinagar, Gujarat',
+      degree: 'Secondary - SSC (GSEB)',
+      when: '2020 - 2021',
+      details: [
+        'Percentage: 90%',
+        'Board: GSEB (Gujarat Secondary Education Board)',
       ],
     },
   ] as EducationItem[],
@@ -293,7 +303,7 @@ export const portfolio = {
       bullets: ['Supported outreach and event coordination for the IEEE TechSangam ecosystem.'],
     },
     {
-      organization: 'IEEE DEY 2025',
+      organization: 'IEEE DAY 2025',
       role: 'Ambassador',
       when: 'Jul 2025 - Oct 2025',
       bullets: ['Promoted IEEE programs and student engagement initiatives.'],
@@ -303,6 +313,12 @@ export const portfolio = {
       role: 'Student Coordinator, Emerging Research Trends in Engineering (ERTE-2025)',
       when: 'July 2025',
       bullets: ['Coordinated and managed ERTE-2025, handling planning, logistics, and seamless event execution.'],
+    },
+    {
+      organization: 'M. M. Patel Students Research Project Cell (MMPSRPC), Kadi Sarva Vishvavidyalaya',
+      role: 'Students Research Lab Member',
+      when: 'Nov 2025 - Present',
+      bullets: ['Active member contributing to student research initiatives, project support, and mentoring.'],
     },
     {
       organization: 'IEEE LDRP-ITR Student Branch',
@@ -326,12 +342,12 @@ export const portfolio = {
     },
   ] as PortfolioSkillGroup[],
   certifications: [
-    { title: 'Database Management System', issuer: 'NPTEL', year: '2024' },
-    { title: 'Problem Solving Through Programming in C', issuer: 'NPTEL', year: '2024' },
-    { title: 'Azure Fundamentals (AZ-900)', issuer: 'Microsoft' },
-    { title: 'GitHub Foundation', issuer: 'GitHub' },
-    { title: 'Python for Data Science', issuer: 'NPTEL', year: '2025' },
-    { title: 'Introduction to Algorithms and Analysis', issuer: 'NPTEL', year: '2025' },
+    { title: 'Database Management System', issuer: 'NPTEL', year: '2024', image: 'NPTEL DBMS CERTIFICATE.jpg' },
+    { title: 'Problem Solving Through Programming in C', issuer: 'NPTEL', year: '2024', image: 'PROBLEM SOLVING THROUGH PROGRAMMING IN C NPTEL.jpg' },
+    { title: 'Azure Fundamentals (AZ-900)', issuer: 'Microsoft', image: 'AZ-900.jpg' },
+    { title: 'GitHub Foundation', issuer: 'GitHub', image: 'GitHubFoundations_Badge20250101-27-fddjb-1.png' },
+    { title: 'Python for Data Science', issuer: 'NPTEL', year: '2025', image: 'Python for Data Science (1)_page-0001.jpg' },
+    { title: 'Introduction to Algorithms and Analysis', issuer: 'NPTEL', year: '2025', image: 'Introduction to Algorithms and Analysis_page-0001.jpg' },
   ] as CertificationItem[],
   achievementGroups: [
     {
@@ -340,6 +356,9 @@ export const portfolio = {
         'Shortlisted for the IEEE IES Generative AI Challenge 2026 Hackathon.',
         'Finalist - ODOO x Gujarat Vidyapith Hackathon 2026.',
         'Finalist - AISEHack 2026.',
+        'Finalist - IEEE Data Science Challenge (DSC 3.0).',
+        'Finalist - InnovAItion: Shaping Future Innovators Hackathon.',
+        'Winner - ImpactThon @ KSV 2025-26 (Track: Safe, Trusted and Responsible Technology).',
       ],
     },
     {
@@ -353,10 +372,7 @@ export const portfolio = {
         'Runner-up - State Level Football (KSV Team).',
         'Presented Poster - National Poster Competition on AI Powered Research and Innovation organized by GTU.',
         'Best Poster Award - Second Position on Track V: Intelligent Data Analytics & Data Engineering at IGNITE 2.0, AISTS 2025.',
-        'Finalist - IEEE Data Science Challenge (DSC 3.0).',
-        'Finalist - InnovAItion: Shaping Future Innovators Hackathon.',
-        'Winner - ImpactThon @ KSV 2025-26 (Track: Safe, Trusted and Responsible Technology).',
-        '4th Rank - Top 5 IEEE YESIST12 2025 publicity ambassadors in India.',
+        
       ],
     },
     {
@@ -365,3 +381,4 @@ export const portfolio = {
     },
   ] as GroupedAchievementItem[],
 } as const;
+// rebuilt: sync
